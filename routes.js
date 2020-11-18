@@ -440,7 +440,7 @@ router.get("/update-booking-record:id/edit",(req,res)=>{
     bookSchema.findById(req.params.id,function (err, booking){
         if(err){
             console.log(err);
-            res.redirect("view-all-booking");
+            res.redirect("/view-all-booking");
         }else{
             res.render("adminEditBookingForm",{booking: booking});
         }
@@ -454,7 +454,7 @@ router.put("/update-booking-record:id/edit",(req, res)=>{
             console.log(err);
         }else{
             console.log(updatedata)
-            res.redirect("view-all-booking");
+            res.redirect("/view-all-booking");
         }
     })
 })
