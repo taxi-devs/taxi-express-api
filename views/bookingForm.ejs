@@ -5,6 +5,22 @@
 </head>
 <body>
       <div>
+        <h1>List of Available Cars</h1>
+    <table class="table">
+            <thead>
+                <tr>
+                    <th>Car Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% cars.forEach(function(car) { %>
+                <tr>
+                    <td><%= car.carType%></td>
+                </tr>
+                <% }); %>
+            </tbody>
+        </table><br><br>
+
         <h1> Book In Under A Minute </h1>
         <p> Airport Transfers, Taxis and Executive Cars </p>
         <form action="/add-booking"  method="POST">
