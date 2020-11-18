@@ -1,0 +1,20 @@
+<html>
+<head>
+<title>Edit Driver Details</title>
+</head>
+<body>
+    <h1>Edit <%=driver.name%> Details</h1><br>
+    <form action="/update-driver-record<%=driver._id%>/edit?_method=PUT" method="POST">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="driver[name]" value="<%=driver.name%>"><br><br>
+        <label for="age">Age</label>
+        <input type="number" id="age" name="driver[age]" value="<%=driver.age%>"><br><br>
+        <label for="phone">Phone</label>
+        <input type="number" id="phone" name="driver[phone]" value="<%=driver.phone%>"><br><br>
+        <input type="submit">
+    </form><br><br>
+    <div>
+       <button><a href="/driver">Exit</a></button>
+    </div>  
+</body>
+</html>

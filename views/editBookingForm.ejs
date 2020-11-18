@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>Edit Booking Details</title>
+</head>
+<body>
+    <br><br>
+        <div>
+        <h4>Edit the user's booking details here:</h4>
+            <form action="/edit-booking-record:id <% profile.id %> " method="POST">
+                <div style ="background-color: lightcyan;">
+                    <br>
+                    <label for="passenger_name">Passenger Name: </label>
+                    <input type="text" id="passenger_name" name="passenger_name" value=" <%= profile.passenger_name %> ">
+                    <br><br>
+                    <label for="pickup_location">Pick-up Location: </label>
+                    <input type="Text" id="pickup_location" name="pickup_location" value=" <%= profile.pickup_location %> ">
+                    <br><br>
+                    <label for="dropoff_location">Drop-off Location: </label>
+                    <input type="Text" id="dropoff_location" name="dropoff_location" value=" <%= profile.dropoff_location %> ">
+                    <br><br>
+                    <label for="pickup_time">Pick-up Time: </label>
+                    <input type="text" id="pickup_time" name="pickup_time" value=" <%= profile.pickup_time %> ">
+                    <br><br>
+                    <label for="dropoff_time">Drop-off Time: </label>
+                    <input type="text" id="dropoff_time" name="dropoff_time" value=" <%= profile.dropoff_time %> ">
+                    <br><br>
+                    <label for="date">Date: </label>
+                    <input type="text" id="date" name="date" value=" <%= profile.date %> ">
+                    <br><br>
+                    <label for="car">Car: </label>
+                    <input type="text" id="car" name="car" value=" <%= profile.car %> ">
+                    <br><br>
+                    <label for="number_of_passengers">Number of Passengers: </label>
+                    <input type="text" id="number_of_passengers" name="number_of_passengers" value=" <%= profile.number_of_passengers %> ">
+                    <br><br>
+                </div>
+                <br><br> 
+                <div>
+                    <button type="submit">Save Changes</button><br><br>
+                </div>
+                <br>
+                <div>
+                    <button><a href="/view-booking-info">Back</a></button></a>
+                </div>
+            </form>  
+        </div>
+   
+</body>
+</html>

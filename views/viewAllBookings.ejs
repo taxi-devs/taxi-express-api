@@ -1,0 +1,47 @@
+<DOCTYPE html>
+<html>
+<head>
+     <title> Booking Form </title>
+</head>
+<body>     
+    <h1>Booking Records</h1>
+    <table class="table">
+            <thead>
+                <tr>
+                    <th>Passenger Name</th>
+                    <th>Pick-up Location</th>
+                    <th>Drop-off Location</th>
+                    <th>Pick-up Time</th>
+                    <th>Drop-off Time</th>
+                    <th>Date</th>
+                    <th>Car</th>
+                    <th>Number of Passengers</th>
+                    <th>Delete</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% bookings.forEach(function(booking) { %>
+                <tr>
+                    <td><%= booking.passenger_name%></td>
+                    <td><%= booking.pickup_location%></td>
+                    <td><%= booking.dropoff_location%></td>
+                    <td><%= booking.pickup_time%></td>
+                    <td><%= booking.dropoff_time%></td>
+                    <td><%= booking.date%></td>
+                    <td><%= booking.car%></td>
+                    <td><%= booking.number_of_passengers%></td>
+                    <td><form action="/delete-booking-record<%=booking._id%>/?_method=DELETE" method="POST">
+                            <button type="submit">Delete</button>
+                         </form>
+                    </td>
+                    <td><button><a href="/update-booking-record<%=booking._id%>/edit">Edit</a> </button></td>
+                </tr>
+                <% }); %>
+            </tbody>
+        </table></center><br><br>
+    <div>
+        <button><a href="/admin-add-booking">Add New Booking</a></button>
+    </div>
+</body>
+<html>

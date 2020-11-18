@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<head>
+    <title>User Details Form</title>
+</head>
+<body>
+
+    <div>
+        <h1>Add New User</h1>
+        <form action="/add-new-user" method="POST">
+		<label for="fullName">Full Name</label>
+        <input type="Text" name="fullName" id="fullName" required><br><br>
+        <label for="email">Email</label>
+        <input type="Email" id="email" name="email" required><br><br>
+        <label for="username">UserName</label>
+        <input type="Text" id="username" name="username" required><br><br>
+        <label for="password">Password</label>
+        <input type="Password" id="password" name="password" required><br><br>
+        <button>Submit</button>
+     </form>
+    </div>
+
+    <h1>Users Records</h1>
+    <table class="table">
+            <thead>
+                <tr>
+                    <th>Passenger Name</th>
+                    <th>Email</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Delete</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% users.forEach(function(user) { %>
+                <tr>
+                    <td><%= user.fullName%></td>
+                    <td><%= user.email%></td>
+                    <td><%= user.username%></td>
+                    <td><%= user.password%></td>
+                    <td><form action="/delete-user-record<%=user._id%>/?_method=DELETE" method="POST">
+                            <button type="submit">Delete</button>
+                         </form>
+                    </td>
+                    <td><button><a href="/update-user-record<%=user._id%>/edit">Edit</a> </button></td>
+                </tr>
+                <% }); %>
+            </tbody>
+        </table></center><br><br>
+    <div>
+        <button><a href="/"> Log Out </a></button>
+    </div>
+    
+    
+</body>
+</html>

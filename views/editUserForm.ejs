@@ -1,0 +1,23 @@
+<html>
+<head>
+<title>Edit Car Details</title>
+</head>
+<body>
+    <h1>Edit <%=user.fullName%> Details</h1><br>
+    <form action="/update-user-record<%=user._id%>/edit?_method=PUT" method="POST">
+        <label for="fullName">Passenger Name</label>
+        <input type="text" id="fullName" name="user[fullName]" value="<%=user.fullName%>"><br><br>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="user[email]" value="<%=user.email%>"><br><br>
+        <label for="username">Username</label>
+        <input type="text" id="username" name="user[username]" value="<%=user.username%>"><br><br>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="user[password]" value="<%=user.password%>"><br><br>
+        <input type="submit">
+    </form><br><br>
+    <div>
+       <button><a href="/view-user">Exit</a></button>
+    </div> 
+   
+</body>
+</html>

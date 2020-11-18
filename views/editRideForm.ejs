@@ -1,0 +1,18 @@
+<html>
+<head>
+<title>Edit Ride Details</title>
+</head>
+<body>
+    <h1>Edit Ride Details</h1><br>
+    <form action="/update-ride-record<%=ride._id%>/edit?_method=PUT" method="POST">
+        <label for="pickup_location">Name</label>
+        <input type="text" id="pickup_location" name="ride[pickup_location]" value="<%=ride.pickup_location%>"><br><br>
+        <label for="dropoff_location">Age</label>
+        <input type="text" id="dropoff_location" name="ride[dropoff_location]" value="<%=ride.dropoff_location%>"><br><br>
+        <input type="submit">
+    </form><br><br>
+    <div>
+       <button><a href="/ride">Exit</a></button>
+    </div>   
+</body>
+</html>

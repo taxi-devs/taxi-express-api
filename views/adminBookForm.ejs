@@ -1,0 +1,72 @@
+<DOCTYPE html>
+<html>
+<head>
+     <title> Booking Form </title>
+</head>
+<body>
+      <div>
+        <h1> Book In Under A Minute </h1>
+        <p> Airport Transfers, Taxis and Executive Cars </p>
+        <form action="/admin-add-booking"  method="POST">
+          <div>
+              <label for="passenger_name">Passenger Name</label>
+              <input type="Text" id="passenger_name" name="passenger_name" required>
+          </div>
+          <div>
+              <label for="pickup_location">Pick-up Location</div>
+                <select Type="Text" id="pickup_location" name="pickup_location">
+                    <option value="Vision City">Vision City</option>
+                    <option value="Gerehu">Gerehu</option>   
+                    <option value="Boroko">Boroko</option>
+                    <option value="Airport">Airport</option>
+                    <option value="Gordons">Gordons</option> 
+                </select>
+          </div>
+          <div>
+              <label for="dropoff_location">Drop-off Location</div>
+                <select Type="Text" id="dropoff_location" name="dropoff_location">
+                    <option value="Airport">Airport</option>
+                    <option value="Vision City">Vision City</option>
+                    <option value="Gerehu">Gerehu</option>   
+                    <option value="Boroko">Boroko</option>
+                    <option value="Gordons">Gordons</option>
+                </select>
+          </div>
+          <div>
+              <label for="pickup_time">Pick-up Time</label>
+              <input type="Time" id="pickup_time" name="pickup_time" >
+          </div>
+          <div>
+              <label for="dropoff_time">Drop-off Time</label>
+              <input type="Time" id="dropoff_time" name="dropoff_time" >
+          </div>
+          <div>
+              <label for="date">Date</label>
+              <input type="Date" id="date" name="date" required>
+          </div>
+          <div>
+              <label for="car">Car</div>
+                <select Type="Text" id="car" name="car">
+                    <optgroup label="Select Car"> 
+                        <% cars.forEach(function(car) { %>
+                        <option>
+                          <%= car.carType%> 
+                        </option>
+                        <% }); %>
+                    </optgroup>
+                </select>
+          </div>
+          <div>
+              <label for="number_of_passengers">Number of Passengers</label>
+              <input type="Number" id="number_of_passengers" name="number_of_passengers" >
+          </div>
+          <div>
+          <button> Submit </button>
+          </div>
+        </form>
+      </div>
+      <div>
+        <button><a href="/">Log Out</a></button>
+      </div>
+</body>
+<html>
