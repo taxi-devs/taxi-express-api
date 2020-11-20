@@ -4,7 +4,6 @@ const express        = require('express'),
       LocalStrategy  = require("passport-local"),
       User           = require("./models/userSchema.js"),
       bookSchema     = require("./models/bookSchema.js"),
-      rideSchema     = require("./models/rideSchema.js"),
       carSchema      = require("./models/carSchema.js"),
       driverSchema   = require("./models/driverSchema.js")
 
@@ -24,7 +23,7 @@ const express        = require('express'),
 
 /* ---User Sign up route--- */
 router.get('/', (req,res) =>{
-    res.render("SignUp")
+
 })
 
 
@@ -39,18 +38,17 @@ router.post("/sign-up",(req,res)=>{
             }), req.body.password,function(err,user){
                 if(err){
                     console.log(err)
-                    res.render("SignUp")
                 }
                 passport.authenticate("local")(req,res,function(){
                 res.redirect("/login")
                 })    
-    })
+            })
 })
 
 
 /* ---User Login route--- */
 router.get("/login",(req,res)=>{
-    res.render("login")
+
 })
 
 
@@ -73,7 +71,7 @@ router.get("/book",isLoggedIn ,(req,res) =>{
     carSchema.find({},(err,cars)=>{
         if (err) {console.log(err);
         }else{
-            res.render("bookingForm",{cars: cars});
+           res.send(cars)
         }
     })
 })
@@ -94,7 +92,6 @@ router.post("/add-booking", function(req,res){
             console.log(err);
         }else {
             console.log(data);
-            //res.redirect("/view-booking");
             res.send(`  <html>
                         <body>
                         <div>
@@ -121,68 +118,6 @@ router.post("/add-booking", function(req,res){
 
 
 //=========================== Admin Section ===============
-//=========================== Rides Section ===============
-/* ---Add a new rides record to the database--- */
-router.post("/add-ride", function(req,res){
-    var pickup_location = req.body.pickup_location;
-    var dropoff_location = req.body.dropoff_location;
-    var newRide = {pickup_location:pickup_location, dropoff_location:dropoff_location};
-    rideSchema.create(newRide,(err,data)=>{
-        if(err){
-            console.log(err);
-        }else {
-            console.log(data);
-            res.redirect("/ride")
-        }
-    })
-})
-
-/* Retrieve Rides records */
-router.get("/ride", (req,res) =>{
-    rideSchema.find({},(err,locations)=>{
-        if (err) {console.log(err);
-        }else{
-            res.render("rideForm",{locations: locations});
-        }
-    })
-})
-
-/* Delete Rides records */
-router.delete("/delete-ride-record:id",(req,res)=>{
-    rideSchema.findByIdAndRemove(req.params.id,function (err){
-        if(err){
-            console.log(err);
-            res.redirect("/ride");
-        }else {
-            res.redirect("/ride");
-            }
-    })
-})
-
-/* Update Rides records */
-//Get EditForm
-router.get("/update-ride-record:id/edit",(req,res)=>{
-    rideSchema.findById(req.params.id,function (err, ride){
-        if(err){
-            console.log(err);
-            res.redirect("/ride");
-        }else{
-            res.render("editRideForm",{ride: ride});
-        }
-    })
-})
-
-//Edit Put request
-router.put("/update-ride-record:id/edit",(req, res)=>{
-    rideSchema.findByIdAndUpdate(req.params.id,req.body.ride,function(err,updatedata){
-        if(err){
-            console.log(err);
-        }else{
-            console.log(updatedata)
-            res.redirect("/ride");
-        }
-    })
-})
 
 //=========================== Cars Section ===============
 /* ---Add a new car record to the database--- */
@@ -205,7 +140,7 @@ router.get("/car", (req,res) =>{
     carSchema.find({},(err,cars)=>{
         if (err) {console.log(err);
         }else{
-            res.render("carForm",{cars: cars});
+            res.send(cars)
         }
     })
 })
@@ -230,7 +165,7 @@ router.get("/update-car-record:id/edit",(req,res)=>{
             console.log(err);
             res.redirect("/car");
         }else{
-            res.render("editCarForm",{car: car});
+            res.send(car)
         }
     })
 })
@@ -269,7 +204,7 @@ router.get("/driver", (req,res) =>{
     driverSchema.find({},(err,drivers)=>{
         if (err) {console.log(err);
         }else{
-            res.render("driverForm",{drivers: drivers});
+            res.send(drivers)
         }
     })
 })
@@ -294,7 +229,7 @@ router.get("/update-driver-record:id/edit",(req,res)=>{
             console.log(err);
             res.redirect("/driver");
         }else{
-            res.render("editDriverForm",{driver: driver});
+            res.send(driver)
         }
     })
 })
@@ -324,7 +259,6 @@ router.post("/add-new-user",(req,res)=>{
             }), req.body.password,function(err,user){
                     if(err){
                         console.log(err)
-                        res.render("SignUp")
                     }
                     passport.authenticate("local")(req,res,function(){
                     res.redirect("/view-user")
@@ -337,7 +271,7 @@ router.get("/view-user", (req,res) =>{
     User.find({},(err,users)=>{
         if (err) {console.log(err);
         }else{
-            res.render("viewUser",{users: users});
+            res.send(users)
         }
     })
 })
@@ -362,7 +296,7 @@ router.get("/update-user-record:id/edit",(req,res)=>{
             console.log(err);
             res.redirect("/view-user");
         }else{
-            res.render("editUserForm",{user: user});
+            res.send(user)
         }
     })
 })
@@ -385,7 +319,7 @@ router.get("/admin-add-booking", (req,res) =>{
     carSchema.find({},(err,cars)=>{
         if (err) {console.log(err);
         }else{
-            res.render("adminBookForm",{cars: cars});
+           res.send(cars)
         }
     })
 })
@@ -417,7 +351,7 @@ router.get("/view-all-booking", function(req,res){
     bookSchema.find({},(err,bookings)=>{
         if (err) {console.log(err);
         }else{
-            res.render("viewAllBookings",{bookings: bookings});
+            res.send(bookings)
         }
     })
 })
@@ -442,7 +376,7 @@ router.get("/update-booking-record:id/edit",(req,res)=>{
             console.log(err);
             res.redirect("/view-all-booking");
         }else{
-            res.render("adminEditBookingForm",{booking: booking});
+            res.send(booking)
         }
     })
 })
@@ -458,4 +392,6 @@ router.put("/update-booking-record:id/edit",(req, res)=>{
         }
     })
 })
+
+
 module.exports = router

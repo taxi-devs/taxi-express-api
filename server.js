@@ -1,11 +1,12 @@
 const express        = require("express"),
       app            = express(),
       bodyParser     = require("body-parser"),
-      methodOverride = require("method-override"),
+      //methodOverride = require("method-override"),
       mongoose       = require("mongoose"),
       port           = 2000,
-      path           = require("path"),
-      routes         = require("./routes.js")
+      //path           = require("path"),
+      routes         = require("./routes.js"),
+      cors           = require("cors")
       
 /* ---Database Connection--- */
 mongoose.connect("mongodb+srv://atanao:dontinon@cluster0.enweg.mongodb.net/TaxiAppDB?retryWrites=true&w=majority", 
@@ -19,10 +20,13 @@ mongoose.connect("mongodb+srv://atanao:dontinon@cluster0.enweg.mongodb.net/TaxiA
 )
 
 /* ---Middlewear--- */
-app.set("views", path.join(__dirname, "views"))
-app.set("view engine","ejs");
-app.use(bodyParser.urlencoded({ extended:true }));
-app.use(methodOverride("_method"));
+// app.set("views", path.join(__dirname, "views"))
+// app.set("view engine","ejs")
+// app.use(methodOverride("_method"))
+app.use(bodyParser.urlencoded({ extended:true }))
+app.use(express.json())
+app.use(cors())
+
 
 /* ---Import Routes ---*/
 app.use(routes)
