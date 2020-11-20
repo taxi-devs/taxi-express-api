@@ -24,7 +24,7 @@ const express        = require('express'),
 
 /* ---User Sign up route--- */
 router.get('/', (req,res) =>{
-    res.render("SignUp")
+    res.json({ message : "API is up" })
 })
 
 
@@ -80,43 +80,22 @@ router.get("/book",isLoggedIn ,(req,res) =>{
 
 /* ---Add a new user's booking record to the database--- */
 router.post("/add-booking", function(req,res){
-    var passenger_name = req.body.passenger_name;
-    var pickup_location = req.body.pickup_location;
-    var dropoff_location = req.body.dropoff_location;
-    var pickup_time = req.body.pickup_time;
-    var dropoff_time = req.body.dropoff_time;
-    var date = req.body.date;
-    var car = req.body.car;
-    var number_of_passengers = req.body.number_of_passengers;
-    var newBooking = {passenger_name:passenger_name, pickup_location:pickup_location, dropoff_location:dropoff_location, pickup_time:pickup_time, dropoff_time:dropoff_time, date:date, car:car, number_of_passengers:number_of_passengers};
-    bookSchema.create(newBooking,(err,data)=>{
-        if(err){
-            console.log(err);
-        }else {
-            console.log(data);
-            //res.redirect("/view-booking");
-            res.send(`  <html>
-                        <body>
-                        <div>
-                            <h2>BOOKING INFORMATION</h2>
-                            <p>===================================</p>
-                            <p>Passenger Name-------------: ${data.passenger_name}</p>
-                            <p>Pick-up Location-----------: ${data.pickup_location}</p>
-                            <p>Drop-off Location----------: ${data.dropoff_location}</p>
-                            <p>Pick-up Time---------------: ${data.pickup_time}</p>
-                            <p>Drop-off Time--------------: ${data.dropoff_time}</p>
-                            <p>Date-----------------------: ${data.date}</p>
-                            <p>Car------------------------: ${data.car}</p>
-                            <p>Number of Passengers-------: ${data.number_of_passengers}</p>
-                            <p>===================================</p>
-                        </div>
-                        <div>
-                            <button><a href="/"> Log Out </a></button>
-                        </div>
-                        </body>
-                        </html> `)
-        }
+    const addBooking = new bookSchema({
+        passenger_name : req.body.passenger_name,
+        pickup_location : req.body.pickup_location,
+        dropoff_location : req.body.dropoff_location,
+        pickup_time : req.body.pickup_time,
+        dropoff_time : req.body.dropoff_time,
+        date : req.body.date,
+        car : req.body.car,
+        number_of_passengers : req.body.number_of_passengers
     })
+    try {
+        const newBooking = await addBooking.save()
+        res.status(201).json(newBooking)
+    } catch(error) {
+        res.status(400).json({ message: error.message })
+    }
 })
 
 
@@ -417,6 +396,7 @@ router.get("/view-all-booking", function(req,res){
     bookSchema.find({},(err,bookings)=>{
         if (err) {console.log(err);
         }else{
+
             res.render("viewAllBookings",{bookings: bookings});
         }
     })
