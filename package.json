@@ -23,5 +23,8 @@
   "private": true,
   "scripts": {
     "dev": "nodemon server.js"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0"
   }
 }
