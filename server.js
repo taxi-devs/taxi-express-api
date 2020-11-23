@@ -3,13 +3,23 @@ const express = require("express"),
     bodyParser = require("body-parser"),
     methodOverride = require("method-override"),
     mongoose = require("mongoose"),
-    port = 2000,
+    port = process.env.PORT || 2000,
     path = require("path"),
     routes = require("./routes.js")
-cors = require('cors')
+    cors = require('cors')
+    dotenv = require('dotenv')
+    
+/* ---Middleware--- */
+app.set("views", path.join(__dirname, "views"))
+// app.set("view engine","ejs");
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
+app.use(cors())
+dotenv.config();
 
 /* ---Database Connection--- */
-mongoose.connect("mongodb+srv://atanao:dontinon@cluster0.enweg.mongodb.net/TaxiAppDB?retryWrites=true&w=majority", {
+const dburi = process.env.MONGOURI;
+mongoose.connect(dburi, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 },
@@ -22,12 +32,6 @@ mongoose.connect("mongodb+srv://atanao:dontinon@cluster0.enweg.mongodb.net/TaxiA
 )
 mongoose.set('useCreateIndex', true)
 
-/* ---Middleware--- */
-app.set("views", path.join(__dirname, "views"))
-// app.set("view engine","ejs");
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(methodOverride("_method"));
-app.use(cors())
 
 /* ---Import Routes ---*/
 app.use(routes)
