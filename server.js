@@ -15,6 +15,7 @@ app.set("views", path.join(__dirname, "views"))
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(cors())
+app.use(express.json())
 dotenv.config();
 
 /* ---Database Connection--- */
