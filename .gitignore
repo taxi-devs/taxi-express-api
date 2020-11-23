@@ -1,2 +1,4 @@
 /node_modules
 routes.http
+.env
+yarn.lock
