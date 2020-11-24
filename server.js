@@ -24,14 +24,15 @@ mongoose.connect(dburi, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 },
-    function (err, database) {
-        if (err) {
-            throw err
-        }
-        console.log("Connection made to Database")
+function (err, database) {
+    if (err) {
+        throw err
     }
+    console.log("Connection made to Database")
+}
 )
 mongoose.set('useCreateIndex', true)
+mongoose.set('useFindAndModify', false);
 
 
 /* ---Import Routes ---*/
