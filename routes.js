@@ -73,10 +73,10 @@ router.get("/book", async (req, res) => {
     try {
         await bookSchema.find({}, (err, bookings) => {
             if (err) {
-                res.status(200).json({ message: err.message })
+                res.status(400).json({ message: err.message })
                 console.log(err);
             } else {
-                res.status(400).json(bookings)
+                res.status(200).json(bookings)
             }
         })
     } catch(error){
@@ -416,15 +416,13 @@ router.get("/view-all-booking", function (req, res) {
 })
 
 /* Delete Booking records */
-router.delete("/delete-booking-record:id", (req, res) => {
-    bookSchema.findByIdAndRemove(req.params.id, function (err) {
-        if (err) {
-            console.log(err);
-            res.redirect("/view-all-booking");
-        } else {
-            res.redirect("/view-all-booking");
-        }
-    })
+router.delete("/delete-booking-record/:id", (req, res) => {
+    bookSchema.findByIdAndRemove(req.params.id)
+        .then( data => {
+            res.status(200).json({Deleted: data});
+        }).catch(err => {
+            res.status(400).json({ message: err.message})
+        })
 })
 
 /* Update Booking records */
