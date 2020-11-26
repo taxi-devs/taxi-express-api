@@ -3,6 +3,7 @@ const express = require("express"),
     bodyParser = require("body-parser"),
     methodOverride = require("method-override"),
     mongoose = require("mongoose"),
+    host = process.env.HOST || 'http://localhost'
     port = process.env.PORT || 2000,
     path = require("path"),
     routes = require("./routes.js")
@@ -40,5 +41,5 @@ app.use(routes)
 
 /* ---Calling the port the server in running on---*/
 app.listen(port, () => {
-    console.log(`App running on http://localhost:${port}`)
+    console.log(`App running on ${host}:${port}`)
 })
