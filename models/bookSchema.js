@@ -34,7 +34,7 @@ const bookingSchema = new mongoose.Schema({
 
     car: {
         type: String,
-        //required: true
+        required: true
     },
 
     number_of_passengers: {
