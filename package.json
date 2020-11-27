@@ -21,10 +21,10 @@
   "repository": "https://github.com/taxi-devs/taxi-express-api.git",
   "author": "Frank Manue Jr <fpj.manue.jnr@hotmail.com>",
   "private": true,
-  "scripts": {
-    "dev": "nodemon server.js"
-  },
   "devDependencies": {
     "dotenv": "^8.2.0"
+  },
+  "scripts": {
+    "dev": "nodemon server.js"
   }
 }
