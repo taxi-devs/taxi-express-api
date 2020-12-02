@@ -119,6 +119,152 @@ router.post("/add-booking", function(req,res){
 
 //=========================== Admin Section ===============
 
+//=========================== Users Section ===============
+/* ---Add a new user record to the database--- */
+router.post("/add-new-user",(req,res)=>{
+    
+    User.register(new User({
+            fullName: req.body.fullName,
+            email: req.body.email,
+            username: req.body.username,
+            password:req.body.password
+            }), req.body.password,function(err,user){
+                    if(err){
+                        console.log(err)
+                    }
+                    passport.authenticate("local")(req,res,function(){
+                    res.redirect("/view-user")
+                })    
+    })
+})
+
+/* Retrieve Users records */
+router.get("/view-user", (req,res) =>{
+    User.find({},(err,users)=>{
+        if (err) {console.log(err);
+        }else{
+            res.send(users)
+        }
+    })
+})
+
+/* Delete Users records */
+router.delete("/delete-user-record/:id",(req,res)=>{
+    User.findByIdAndRemove(req.params.id,function (err){
+        if(err){
+            console.log(err);
+            res.redirect("/view-user");
+        }else {
+            res.redirect("/view-user");
+            }
+    })
+})
+
+/* Update Users records */
+//Get EditForm
+router.get("/update-user-record:id/edit",(req,res)=>{
+    User.findById(req.params.id,function (err, user){
+        if(err){
+            console.log(err);
+            res.redirect("/view-user");
+        }else{
+            res.send(user)
+        }
+    })
+})
+
+//Edit Put request
+router.put("/update-user-record:id/edit",(req, res)=>{
+    User.findByIdAndUpdate(req.params.id,req.body.user,function(err,updatedata){
+        if(err){
+            console.log(err);
+        }else{
+            console.log(updatedata)
+            res.redirect("/view-user");
+        }
+    })
+})
+
+//=========================== Bookings Section ===============
+/* ---Route to admin booking--- */
+router.get("/admin-add-booking", (req,res) =>{
+    carSchema.find({},(err,cars)=>{
+        if (err) {console.log(err);
+        }else{
+           res.send(cars)
+        }
+    })
+})
+
+/* ---Add a new user's booking record to the database--- */
+router.post("/admin-add-booking", function(req,res){
+    var passenger_name = req.body.passenger_name;
+    var pickup_location = req.body.pickup_location;
+    var dropoff_location = req.body.dropoff_location;
+    var pickup_time = req.body.pickup_time;
+    var dropoff_time = req.body.dropoff_time;
+    var date = req.body.date;
+    var car = req.body.car;
+    var number_of_passengers = req.body.number_of_passengers;
+    var newBooking = {passenger_name:passenger_name, pickup_location:pickup_location, dropoff_location:dropoff_location, pickup_time:pickup_time, dropoff_time:dropoff_time, date:date, car:car, number_of_passengers:number_of_passengers};
+    bookSchema.create(newBooking,(err,data)=>{
+        if(err){
+            console.log(err);
+        }else {
+            console.log(data);
+            res.redirect("/view-all-booking");
+        }
+    })
+})
+
+
+/* ---Route to view all booking details--- */
+router.get("/view-all-booking", function(req,res){
+    bookSchema.find({},(err,bookings)=>{
+        if (err) {console.log(err);
+        }else{
+            res.send(bookings)
+        }
+    })
+})
+
+/* Delete Booking records */
+router.delete("/delete-booking-record:id",(req,res)=>{
+    bookSchema.findByIdAndRemove(req.params.id,function (err){
+        if(err){
+            console.log(err);
+            res.redirect("/view-all-booking");
+        }else {
+            res.redirect("/view-all-booking");
+            }
+    })
+})
+
+/* Update Booking records */
+//Get EditForm
+router.get("/update-booking-record:id/edit",(req,res)=>{
+    bookSchema.findById(req.params.id,function (err, booking){
+        if(err){
+            console.log(err);
+            res.redirect("/view-all-booking");
+        }else{
+            res.send(booking)
+        }
+    })
+})
+
+//Edit Put request
+router.put("/update-booking-record:id/edit",(req, res)=>{
+    bookSchema.findByIdAndUpdate(req.params.id,req.body.booking,function(err,updatedata){
+        if(err){
+            console.log(err);
+        }else{
+            console.log(updatedata)
+            res.redirect("/view-all-booking");
+        }
+    })
+})
+
 //=========================== Cars Section ===============
 /* ---Add a new car record to the database--- */
 router.post("/add-car", function(req,res){
@@ -245,153 +391,5 @@ router.put("/update-driver-record:id/edit",(req, res)=>{
         }
     })
 })
-
-
-//=========================== Users Section ===============
-/* ---Add a new user record to the database--- */
-router.post("/add-new-user",(req,res)=>{
-    
-    User.register(new User({
-            fullName: req.body.fullName,
-            email: req.body.email,
-            username: req.body.username,
-            password:req.body.password
-            }), req.body.password,function(err,user){
-                    if(err){
-                        console.log(err)
-                    }
-                    passport.authenticate("local")(req,res,function(){
-                    res.redirect("/view-user")
-                })    
-    })
-})
-
-/* Retrieve Users records */
-router.get("/view-user", (req,res) =>{
-    User.find({},(err,users)=>{
-        if (err) {console.log(err);
-        }else{
-            res.send(users)
-        }
-    })
-})
-
-/* Delete Users records */
-router.delete("/delete-user-record:id",(req,res)=>{
-    User.findByIdAndRemove(req.params.id,function (err){
-        if(err){
-            console.log(err);
-            res.redirect("/view-user");
-        }else {
-            res.redirect("/view-user");
-            }
-    })
-})
-
-/* Update Users records */
-//Get EditForm
-router.get("/update-user-record:id/edit",(req,res)=>{
-    User.findById(req.params.id,function (err, user){
-        if(err){
-            console.log(err);
-            res.redirect("/view-user");
-        }else{
-            res.send(user)
-        }
-    })
-})
-
-//Edit Put request
-router.put("/update-user-record:id/edit",(req, res)=>{
-    User.findByIdAndUpdate(req.params.id,req.body.user,function(err,updatedata){
-        if(err){
-            console.log(err);
-        }else{
-            console.log(updatedata)
-            res.redirect("/view-user");
-        }
-    })
-})
-
-//=========================== Bookings Section ===============
-/* ---Route to admin booking--- */
-router.get("/admin-add-booking", (req,res) =>{
-    carSchema.find({},(err,cars)=>{
-        if (err) {console.log(err);
-        }else{
-           res.send(cars)
-        }
-    })
-})
-
-/* ---Add a new user's booking record to the database--- */
-router.post("/admin-add-booking", function(req,res){
-    var passenger_name = req.body.passenger_name;
-    var pickup_location = req.body.pickup_location;
-    var dropoff_location = req.body.dropoff_location;
-    var pickup_time = req.body.pickup_time;
-    var dropoff_time = req.body.dropoff_time;
-    var date = req.body.date;
-    var car = req.body.car;
-    var number_of_passengers = req.body.number_of_passengers;
-    var newBooking = {passenger_name:passenger_name, pickup_location:pickup_location, dropoff_location:dropoff_location, pickup_time:pickup_time, dropoff_time:dropoff_time, date:date, car:car, number_of_passengers:number_of_passengers};
-    bookSchema.create(newBooking,(err,data)=>{
-        if(err){
-            console.log(err);
-        }else {
-            console.log(data);
-            res.redirect("/view-all-booking");
-        }
-    })
-})
-
-
-/* ---Route to view all booking details--- */
-router.get("/view-all-booking", function(req,res){
-    bookSchema.find({},(err,bookings)=>{
-        if (err) {console.log(err);
-        }else{
-            res.send(bookings)
-        }
-    })
-})
-
-/* Delete Booking records */
-router.delete("/delete-booking-record:id",(req,res)=>{
-    bookSchema.findByIdAndRemove(req.params.id,function (err){
-        if(err){
-            console.log(err);
-            res.redirect("/view-all-booking");
-        }else {
-            res.redirect("/view-all-booking");
-            }
-    })
-})
-
-/* Update Booking records */
-//Get EditForm
-router.get("/update-booking-record:id/edit",(req,res)=>{
-    bookSchema.findById(req.params.id,function (err, booking){
-        if(err){
-            console.log(err);
-            res.redirect("/view-all-booking");
-        }else{
-            res.send(booking)
-        }
-    })
-})
-
-//Edit Put request
-router.put("/update-booking-record:id/edit",(req, res)=>{
-    bookSchema.findByIdAndUpdate(req.params.id,req.body.booking,function(err,updatedata){
-        if(err){
-            console.log(err);
-        }else{
-            console.log(updatedata)
-            res.redirect("/view-all-booking");
-        }
-    })
-})
-
 
 module.exports = router

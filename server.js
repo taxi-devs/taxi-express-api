@@ -7,8 +7,8 @@ const express        = require("express"),
       cors           = require("cors")
       
 /* ---Database Connection--- */
-mongoose.connect("mongodb+srv://atanao:dontinon@cluster0.enweg.mongodb.net/TaxiAppDB?retryWrites=true&w=majority", 
-{useNewUrlParser:true,useUnifiedTopology:true}, 
+
+mongoose.connect("mongodb+srv://atanao:dontinon@cluster0.enweg.mongodb.net/TaxiAppDB?retryWrites=true&w=majority",{useNewUrlParser:true,useUnifiedTopology:true, useCreateIndex:true}, 
     function(err,database){
         if(err){
            throw err
