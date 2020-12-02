@@ -108,7 +108,7 @@ router.post("/add-booking", async (req, res) => {
 
 
 //=========================== Admin Section ===============
-//=========================== Admin user add ==============
+//=========================== Admin user ==============
 router.post("/add-admin", async (req, res) => {
     console.log(req.body);
     const addAdmin = new adminSchema({
@@ -122,6 +122,23 @@ router.post("/add-admin", async (req, res) => {
         res.status(201).json({ newAdmin })
     } catch (error){
         res.status(400).json({ message: error.message })
+    }
+})
+
+router.get("/view-admin", async (req, res) => {
+    try {
+        await adminSchema.find({}, (err, admin) => {
+            if (err){
+                res.status(400).json({ message: res.message });
+                console.log(err)
+            }
+            else {
+                res.status(200).json(admin)
+            }
+        })
+    } catch {
+        res.status(400).json({ message: res.message });
+        console.log(err)
     }
 })
 //=========================== Rides Section ===============
