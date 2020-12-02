@@ -5,6 +5,7 @@ const express = require('express'),
     User = require("./models/userSchema.js"),
     bookSchema = require("./models/bookSchema.js"),
     rideSchema = require("./models/rideSchema.js"),
+    adminSchema = require("./models/adminSchema")
     carSchema = require("./models/carSchema.js"),
     driverSchema = require("./models/driverSchema.js")
 
@@ -50,7 +51,7 @@ router.post("/sign-up", (req, res) => {
 
 /* ---User Login route--- */
 router.get("/login", (req, res) => {
-    res.render("login")
+    res.status(200).json({message: "Please login"})
 })
 
 
@@ -69,7 +70,7 @@ function isLoggedIn(req, res, next) {
     res.redirect("/login")
 }
 
-router.get("/book", async (req, res) => {
+router.get("/book", isLoggedIn, async (req, res) => {
     try {
         await bookSchema.find({}, (err, bookings) => {
             if (err) {
@@ -107,6 +108,22 @@ router.post("/add-booking", async (req, res) => {
 
 
 //=========================== Admin Section ===============
+//=========================== Admin user add ==============
+router.post("/add-admin", async (req, res) => {
+    console.log(req.body);
+    const addAdmin = new adminSchema({
+        fullName: req.body.fullname,
+        email: req.body.email,
+        username: req.body.username,
+        password: req.body.password
+    })
+    try {
+        const newAdmin = await addAdmin.save()
+        res.status(201).json({ newAdmin })
+    } catch (error){
+        res.status(400).json({ message: error.message })
+    }
+})
 //=========================== Rides Section ===============
 /* ---Add a new rides record to the database--- */
 router.post("/add-ride", function (req, res) {
